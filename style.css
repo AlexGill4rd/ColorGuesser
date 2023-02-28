@@ -9,7 +9,28 @@ body {
 }
 .score {
   font-size: 1.5em;
+}
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+
   margin-bottom: 10px;
+}
+.tip-button {
+  border: none;
+  padding: 5px 20px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  background-color: rgb(238, 238, 238);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  transition: background-color 100ms ease-in-out;
+  cursor: pointer;
+}
+.tip-button:hover {
+  background-color: rgb(218, 218, 218);
 }
 .spelbord {
   display: flex;

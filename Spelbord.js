@@ -3,6 +3,7 @@ class Spelbord {
   #difficultyFactor = 50;
   #round = 0;
   flikkingID;
+  #changedColor = false;
 
   constructor(spel, width, height) {
     this.spel = spel;
@@ -16,11 +17,27 @@ class Spelbord {
     const blocks = document.createElement("div");
     blocks.classList.add("spelbord-blocks");
 
+    const header = document.createElement("div");
+    header.classList.add("header");
+
     const score = document.createElement("h2");
     score.classList.add("score");
     score.innerHTML = `Score: ${this.#round}`;
 
-    this.#bord.appendChild(score);
+    header.appendChild(score);
+
+    const tip = document.createElement("button");
+    tip.classList.add("tip-button");
+    tip.innerHTML = `Verander Kleur`;
+    tip.addEventListener("click", () => {
+      if (!this.#changedColor) {
+        this.#changedColor = true;
+        this.#nextRound();
+      }
+    });
+
+    header.appendChild(tip);
+    this.#bord.appendChild(header);
 
     this.#bord.classList.add("spelbord");
     const blockAmount = this.width * this.height;
