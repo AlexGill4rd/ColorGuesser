@@ -30,6 +30,8 @@ class Spelbord {
     let randomG = Math.floor(Math.random() * 255);
     let randomB = Math.floor(Math.random() * 255);
 
+    if (this.#difficultyFactor <= 0) this.#difficultyFactor = 1;
+
     for (let i = 0; i < blockAmount; i++) {
       const block = document.createElement("div");
       block.classList.add("spelbord-block");
