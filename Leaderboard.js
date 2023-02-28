@@ -1,5 +1,6 @@
 class Leaderboard {
   #leaderboard = document.createElement("div");
+  #playersListElem = document.createElement("div");
 
   constructor() {
     this.#init();
@@ -8,13 +9,15 @@ class Leaderboard {
     if (!this.#leaderboard.classList.contains("leaderboard"))
       this.#leaderboard.classList.add("leaderboard");
     this.#leaderboard.appendChild(this.#getLoginForm());
+    this.#playersListElem.classList.add("leaderboard-playerlist");
 
     const response = await fetch("https://colourfinder.onrender.com/");
     const players = await response.json();
 
     for (let player of players) {
-      this.#leaderboard.appendChild(this.#getPlayerElement(player));
+      this.#playersListElem.appendChild(this.#getPlayerElement(player));
     }
+    this.#leaderboard.appendChild(this.#playersListElem);
     document.body.appendChild(this.#leaderboard);
   }
   #getPlayerElement(player) {
@@ -54,9 +57,19 @@ class Leaderboard {
     for (let player of players) {
       const score = document.getElementById(player.user + "-score");
       if (score === null)
-        this.#leaderboard.appendChild(this.#getPlayerElement(player));
-      else score.innerHTML = player.highscore;
+        this.#playersListElem.appendChild(this.#getPlayerElement(player));
     }
+    let i = 0;
+    for (let element of document.querySelectorAll(".leaderboard-player")) {
+      const name = element.children[0];
+      const score = element.children[1];
+      name.innerHTML = players[i].user;
+      score.innerHTML = players[i].highscore;
+      element.id = players[i].user + "-score";
+      i++;
+    }
+
+    //score.innerHTML = player.highscore;
   }
   show() {
     this.#leaderboard.style.display = "block";

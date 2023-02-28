@@ -114,7 +114,7 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
   left: 30px;
   top: 30px;
-  width: 200px;
+  width: 220px;
   height: auto;
   padding: 10px;
 }
@@ -147,4 +147,9 @@ body {
   margin-bottom: 10px;
   border-radius: 5px;
   border: none;
+}
+.leaderboard-playerlist {
+  padding: 10px;
+  max-height: 485px;
+  overflow-y: auto;
 }

@@ -8,20 +8,6 @@ class Spel {
     let endscreen = new EndScreen(spelBord);
     endscreen.show();
   }
-  async #updateHighscore(user, score) {
-    console.log("updated");
-    const response = await fetch(
-      "https://colourfinder.onrender.com/highscore",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify({ user: user, score: score }),
-      }
-    );
-  }
   restart() {}
   toonSamenvatting() {}
 }

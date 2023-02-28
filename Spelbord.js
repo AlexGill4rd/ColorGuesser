@@ -92,7 +92,7 @@ class Spelbord {
     if (!incorrect) {
       if (parseInt(this.#round) > EndScreen.getHighscore()) {
         const inputNameElement = document.getElementById("playername");
-        if (inputNameElement.value === undefined)
+        if (inputNameElement.value === "")
           this.#updateHighscore(
             "Guest" + Math.floor(Math.random() + 10000 * 10 - 1),
             this.#round
