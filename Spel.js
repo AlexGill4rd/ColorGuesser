@@ -16,9 +16,6 @@ class Spel {
       "http://https://colourfinder.onrender.com/highscore",
       {
         method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
         },
