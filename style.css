@@ -149,7 +149,7 @@ body {
   border: none;
 }
 .leaderboard-playerlist {
-  padding: 10px;
+  padding: 0 10px;
   max-height: 485px;
   overflow-y: auto;
 }
