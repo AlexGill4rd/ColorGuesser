@@ -108,3 +108,24 @@ body {
 
   margin-top: 40px;
 }
+
+.leaderboard {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.1);
+  left: 30px;
+  top: 30px;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+}
+.leaderboard-player {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: row;
+}
+.leaderboard-player-name {
+  font-weight: bold;
+
+  border-bottom: 1px solid black;
+}
