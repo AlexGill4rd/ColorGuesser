@@ -5,7 +5,8 @@ class Leaderboard {
     this.#init();
   }
   async #init() {
-    this.#leaderboard.classList.add("leaderboard");
+    if (!this.#leaderboard.classList.contains("leaderboard"))
+      this.#leaderboard.classList.add("leaderboard");
 
     const response = await fetch("https://colourfinder.onrender.com/");
     const players = await response.json();
@@ -28,6 +29,10 @@ class Leaderboard {
     }
 
     document.body.appendChild(this.#leaderboard);
+  }
+  update() {
+    this.#leaderboard.innerHTML = "";
+    this.#init();
   }
   show() {
     this.#leaderboard.style.display = "block";

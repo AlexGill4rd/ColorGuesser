@@ -11,7 +11,6 @@ class Spel {
     this.#updateHighscore("alex", spelBord.round);
   }
   async #updateHighscore(user, score) {
-    console.log(user, score);
     const response = await fetch(
       "https://colourfinder.onrender.com/highscore",
       {
