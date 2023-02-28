@@ -7,6 +7,7 @@ class Leaderboard {
   async #init() {
     if (!this.#leaderboard.classList.contains("leaderboard"))
       this.#leaderboard.classList.add("leaderboard");
+    this.#leaderboard.appendChild(this.#getLoginForm());
 
     const response = await fetch("https://colourfinder.onrender.com/");
     const players = await response.json();
@@ -14,7 +15,6 @@ class Leaderboard {
     for (let player of players) {
       this.#leaderboard.appendChild(this.#getPlayerElement(player));
     }
-
     document.body.appendChild(this.#leaderboard);
   }
   #getPlayerElement(player) {
@@ -36,13 +36,24 @@ class Leaderboard {
 
     return playerDiv;
   }
+  #getLoginForm() {
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("leaderboard-login");
+
+    const playerInput = document.createElement("input");
+    playerInput.placeholder = "Jouw naam...";
+    playerInput.id = "playername";
+
+    playerDiv.appendChild(playerInput);
+    return playerDiv;
+  }
   async update() {
     const response = await fetch("https://colourfinder.onrender.com/");
     const players = await response.json();
 
     for (let player of players) {
       const score = document.getElementById(player.user + "-score");
-      if (score === undefined)
+      if (score === null)
         this.#leaderboard.appendChild(this.#getPlayerElement(player));
       else score.innerHTML = player.highscore;
     }

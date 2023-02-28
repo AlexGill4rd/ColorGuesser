@@ -6,16 +6,10 @@ class Spel {
   }
   stop(spelBord) {
     let endscreen = new EndScreen(spelBord);
-
-    console.log(EndScreen.getHighscore());
-    console.log(spelBord.round);
-    if (parseInt(spelBord.round) > EndScreen.getHighscore()) {
-      this.#updateHighscore("alex", spelBord.round);
-    }
-
     endscreen.show();
   }
   async #updateHighscore(user, score) {
+    console.log("updated");
     const response = await fetch(
       "https://colourfinder.onrender.com/highscore",
       {

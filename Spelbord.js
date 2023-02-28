@@ -90,6 +90,13 @@ class Spelbord {
   }
   #onBlockClick(incorrect, correctIndex) {
     if (!incorrect) {
+      if (parseInt(this.#round) > EndScreen.getHighscore()) {
+        const inputNameElement = document.getElementById("playername");
+        if (inputNameElement.value === undefined)
+          this.#updateHighscore("alex", this.#round);
+        else this.#updateHighscore(inputNameElement.value, this.#round);
+      }
+
       let correctElement = document.getElementById(correctIndex);
       const previousColor = correctElement.style.backgroundColor;
       let counter = 0;
@@ -120,5 +127,19 @@ class Spelbord {
       this.#difficultyFactor -= this.#difficultyFactor / 20;
       this.#nextRound();
     }
+  }
+  async #updateHighscore(user, score) {
+    const response = await fetch(
+      "https://colourfinder.onrender.com/highscore",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify({ user: user, score: score }),
+      }
+    );
+    Game.leaderboard.update();
   }
 }
