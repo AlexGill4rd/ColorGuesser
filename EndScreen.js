@@ -54,6 +54,6 @@ class EndScreen {
     this.spelBord.remove();
   }
   static getHighscore() {
-    return localStorage.getItem("highscore");
+    return parseInt(localStorage.getItem("highscore"));
   }
 }

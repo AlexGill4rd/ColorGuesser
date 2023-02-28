@@ -9,7 +9,8 @@ class Spel {
     endscreen.show();
 
     console.log(EndScreen.getHighscore());
-    if (spelBord.round > EndScreen.getHighscore()) {
+    console.log(spelBord.round);
+    if (parseInt(spelBord.round) > EndScreen.getHighscore()) {
       this.#updateHighscore("alex", spelBord.round);
     }
   }
