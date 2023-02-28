@@ -53,4 +53,7 @@ class EndScreen {
     this.#screen.remove();
     this.spelBord.remove();
   }
+  static getHighscore() {
+    return localStorage.getItem("highscore");
+  }
 }

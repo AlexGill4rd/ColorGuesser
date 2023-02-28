@@ -31,8 +31,8 @@ class Leaderboard {
     playerScore.innerHTML = player.highscore;
     playerScore.id = player.user + "-score";
 
-    this.#playerDiv.appendChild(playerName);
-    this.#playerDiv.appendChild(playerScore);
+    playerDiv.appendChild(playerName);
+    playerDiv.appendChild(playerScore);
 
     return playerDiv;
   }
@@ -44,7 +44,7 @@ class Leaderboard {
       const score = document.getElementById(player.user + "-score");
       if (score === undefined)
         this.#leaderboard.appendChild(this.#getPlayerElement(player));
-      else score.innerHTML = player.score;
+      else score.innerHTML = player.highscore;
     }
   }
   show() {

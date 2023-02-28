@@ -8,7 +8,10 @@ class Spel {
     let endscreen = new EndScreen(spelBord);
     endscreen.show();
 
-    this.#updateHighscore("alex", spelBord.round);
+    console.log(EndScreen.getHighscore());
+    if (spelBord.round > EndScreen.getHighscore()) {
+      this.#updateHighscore("alex", spelBord.round);
+    }
   }
   async #updateHighscore(user, score) {
     const response = await fetch(
