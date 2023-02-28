@@ -13,7 +13,7 @@ class Spel {
   async #updateHighscore(user, score) {
     console.log(user, score);
     const response = await fetch(
-      "http://https://colourfinder.onrender.com/highscore",
+      "https://colourfinder.onrender.com/highscore",
       {
         method: "POST",
         headers: {
