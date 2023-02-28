@@ -6,13 +6,14 @@ class Spel {
   }
   stop(spelBord) {
     let endscreen = new EndScreen(spelBord);
-    endscreen.show();
 
     console.log(EndScreen.getHighscore());
     console.log(spelBord.round);
     if (parseInt(spelBord.round) > EndScreen.getHighscore()) {
       this.#updateHighscore("alex", spelBord.round);
     }
+
+    endscreen.show();
   }
   async #updateHighscore(user, score) {
     const response = await fetch(
