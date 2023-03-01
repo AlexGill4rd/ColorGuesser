@@ -49,9 +49,12 @@ class Leaderboard {
     const playerSubmit = document.createElement("input");
     playerSubmit.type = "button";
     playerSubmit.value = "Set";
-    playerSubmit.addEventListener("click", () =>
-      this.onUsernameSet(playerInput, playerSubmit, this.game)
-    );
+    playerSubmit.addEventListener("click", () => {
+      if (!this.hasSet) {
+        this.hasSet = true;
+        this.onUsernameSet(playerInput, playerSubmit, this.game);
+      }
+    });
 
     playerDiv.appendChild(playerInput);
     playerDiv.appendChild(playerSubmit);
