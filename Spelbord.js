@@ -43,8 +43,16 @@ class Spelbord {
         this.#nextRound();
       }
     });
+    const restart = document.createElement("div");
+    restart.classList.add("restart-button");
+    restart.addEventListener("click", () => this.#restart());
+
+    const restartIMG = document.createElement("img");
+    restartIMG.src = "http://cdn.onlinewebfonts.com/svg/img_149822.png";
 
     header.appendChild(tip);
+    restart.appendChild(restartIMG);
+    header.appendChild(restart);
     this.#bord.appendChild(header);
 
     const blockAmount = this.width * this.height;
@@ -97,10 +105,10 @@ class Spelbord {
   }
   #onBlockClick(incorrect, correctIndex) {
     if (!incorrect) {
-      if (parseInt(this.#round) > Leaderboard.highscore) {
-        Leaderboard.endTime = new Date();
-        this.stopClock();
+      Leaderboard.endTime = new Date();
+      this.stopClock();
 
+      if (parseInt(this.#round) > Leaderboard.highscore) {
         this.#updateHighscore(Leaderboard.username);
       }
       this.spel.stop(this);
@@ -146,10 +154,10 @@ class Spelbord {
       duration: duration,
     });
   }
-  #clockId;
+  clockId;
   startClock(clock) {
     this.#updateClock(clock);
-    this.#clockId = setInterval(() => this.#updateClock(clock), 1000);
+    this.clockId = setInterval(() => this.#updateClock(clock), 1000);
   }
   #updateClock(clock) {
     const begin = Leaderboard.startTime;
@@ -159,6 +167,12 @@ class Spelbord {
     clock.innerHTML = durarion.toLocaleTimeString();
   }
   stopClock() {
-    clearInterval(this.#clockId);
+    clearInterval(this.clockId);
+  }
+  #restart() {
+    Leaderboard.endTime = new Date();
+    this.stopClock();
+
+    this.remove();
   }
 }
