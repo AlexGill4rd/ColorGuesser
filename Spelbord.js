@@ -135,7 +135,7 @@ class Spelbord {
     const response = await fetch(
       "https://colourfinder.onrender.com/highscore",
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
