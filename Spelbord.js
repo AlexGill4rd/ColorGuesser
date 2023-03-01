@@ -164,7 +164,7 @@ class Spelbord {
     const now = new Date();
     const durarion = new Date(now.getTime() - begin.getTime());
     durarion.setHours(durarion.getHours() - 1);
-    clock.innerHTML = durarion.toLocaleTimeString();
+    clock.innerHTML = durarion.toTimeString();
   }
   stopClock() {
     clearInterval(this.clockId);

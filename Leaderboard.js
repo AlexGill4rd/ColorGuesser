@@ -129,6 +129,6 @@ class Leaderboard {
   static msToTime(s) {
     let date = new Date(s);
     date.setHours(date.getHours() - 1);
-    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
+    return date.toTimeString();
   }
 }
