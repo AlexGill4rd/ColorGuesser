@@ -23,18 +23,16 @@ class EndScreen {
   show() {
     this.#description.innerHTML = `Je score was ${this.spelBord.round}`;
 
-    let highscore = localStorage.getItem("highscore");
     let highscoreBeaten = false;
 
-    if (highscore < this.spelBord.round) {
-      localStorage.setItem("highscore", this.spelBord.round);
-      highscore = this.spelBord.round;
+    if (Leaderboard.highscore < this.spelBord.round) {
+      Leaderboard.highscore = this.spelBord.round;
       highscoreBeaten = true;
     }
 
     const currentHighScore = document.createElement("h4");
     currentHighScore.classList.add("endscreen-highscore");
-    currentHighScore.innerHTML = `Jouw highscore: ${highscore}`;
+    currentHighScore.innerHTML = `Jouw highscore: ${Leaderboard.highscore}`;
 
     this.#screen.appendChild(this.#description);
     this.#screen.appendChild(currentHighScore);

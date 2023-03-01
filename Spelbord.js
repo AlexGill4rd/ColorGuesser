@@ -5,8 +5,9 @@ class Spelbord {
   flikkingID;
   #changedColor = false;
 
-  constructor(spel, width, height) {
+  constructor(spel, leaderboard, width, height) {
     this.spel = spel;
+    this.leaderboard = leaderboard;
     this.width = width;
     this.height = height;
   }
@@ -90,14 +91,10 @@ class Spelbord {
   }
   #onBlockClick(incorrect, correctIndex) {
     if (!incorrect) {
-      if (parseInt(this.#round) > EndScreen.getHighscore()) {
+      if (parseInt(this.#round) > Leaderboard.highscore) {
         const inputNameElement = document.getElementById("playername");
-        if (inputNameElement.value === "")
-          this.#updateHighscore(
-            "Guest" + Math.floor(Math.random() + 10000 * 10 - 1),
-            this.#round
-          );
-        else this.#updateHighscore(inputNameElement.value, this.#round);
+        if (inputNameElement.value !== "")
+          this.#updateHighscore(Leaderboard.username, this.#round);
       }
 
       let correctElement = document.getElementById(correctIndex);
@@ -131,18 +128,7 @@ class Spelbord {
       this.#nextRound();
     }
   }
-  async #updateHighscore(user, score) {
-    const response = await fetch(
-      "https://colourfinder.onrender.com/highscore",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify({ user: user, score: score }),
-      }
-    );
-    Game.leaderboard.update();
+  async #updateHighscore(username, score) {
+    Socket.get().emit("highscore:update", { username: username, score: score });
   }
 }

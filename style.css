@@ -138,18 +138,41 @@ body {
 .leaderboard-login {
   width: 100%;
   height: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.leaderboard-login input {
+.leaderboard-login input[type="text"] {
   box-sizing: border-box;
 
-  width: 100%;
+  width: 75%;
   padding: 5px 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   border: none;
 }
+.leaderboard-login input[type="button"] {
+  box-sizing: border-box;
+  background-color: rgb(66, 66, 129);
+
+  width: 20%;
+  color: white;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 100ms ease-in-out;
+}
+.leaderboard-login input[type="button"]:hover {
+  background-color: rgb(47, 47, 94);
+  cursor: pointer;
+}
 .leaderboard-playerlist {
   padding: 0 10px;
   max-height: 485px;
   overflow-y: auto;
+}
+.leaderboard-label {
+  margin-bottom: 10px;
 }

@@ -1,38 +1,36 @@
 class Leaderboard {
-  #leaderboard = document.createElement("div");
-  #playersListElem = document.createElement("div");
+  static leaderboard = document.createElement("div");
+  static playersListElem = document.createElement("div");
 
-  constructor() {
+  static highscore = 0;
+  static username = "";
+
+  constructor(game) {
+    this.game = game;
     this.#init();
   }
   async #init() {
-    if (!this.#leaderboard.classList.contains("leaderboard"))
-      this.#leaderboard.classList.add("leaderboard");
-    this.#leaderboard.appendChild(this.#getLoginForm());
-    this.#playersListElem.classList.add("leaderboard-playerlist");
+    if (!Leaderboard.leaderboard.classList.contains("leaderboard"))
+      Leaderboard.leaderboard.classList.add("leaderboard");
+    Leaderboard.leaderboard.appendChild(this.#getLoginForm());
 
-    const response = await fetch("https://colourfinder.onrender.com/");
-    const players = await response.json();
+    Leaderboard.update();
 
-    for (let player of players) {
-      this.#playersListElem.appendChild(this.#getPlayerElement(player));
-    }
-    this.#leaderboard.appendChild(this.#playersListElem);
-    document.body.appendChild(this.#leaderboard);
+    document.body.appendChild(Leaderboard.leaderboard);
   }
-  #getPlayerElement(player) {
+  static getPlayerElement(player) {
     const playerDiv = document.createElement("div");
     playerDiv.classList.add("leaderboard-player");
 
     const playerName = document.createElement("h2");
     playerName.classList.add("leaderboard-player-name");
-    playerName.innerHTML = player.user;
-    playerName.id = player.user;
+    playerName.innerHTML = player.username;
+    playerName.id = player.username;
 
     const playerScore = document.createElement("p");
     playerScore.classList.add("leaderboard-player-score");
     playerScore.innerHTML = player.highscore;
-    playerScore.id = player.user + "-score";
+    playerScore.id = player.username + "-score";
 
     playerDiv.appendChild(playerName);
     playerDiv.appendChild(playerScore);
@@ -43,38 +41,69 @@ class Leaderboard {
     const playerDiv = document.createElement("div");
     playerDiv.classList.add("leaderboard-login");
 
-    const playerInput = document.createElement("input");
+    let playerInput = document.createElement("input");
     playerInput.placeholder = "Jouw naam...";
+    playerInput.type = "text";
     playerInput.id = "playername";
 
+    const playerSubmit = document.createElement("input");
+    playerSubmit.type = "button";
+    playerSubmit.value = "Set";
+    playerSubmit.addEventListener("click", () =>
+      this.onUsernameSet(playerInput, playerSubmit, this.game)
+    );
+
     playerDiv.appendChild(playerInput);
+    playerDiv.appendChild(playerSubmit);
     return playerDiv;
   }
-  async update() {
-    const response = await fetch("https://colourfinder.onrender.com/");
-    const players = await response.json();
+  onUsernameSet(playerInput, playerSubmit, game) {
+    Leaderboard.username = playerInput.value;
+    this.getHighscore(Leaderboard.username, function (highscore) {
+      const loggedLabel = document.createElement("p");
+      loggedLabel.innerHTML = "Ingelogd als: " + playerInput.value;
+      loggedLabel.classList.add("leaderboard-label");
 
-    for (let player of players) {
-      const score = document.getElementById(player.user + "-score");
-      if (score === null)
-        this.#playersListElem.appendChild(this.#getPlayerElement(player));
-    }
-    let i = 0;
-    for (let element of document.querySelectorAll(".leaderboard-player")) {
-      const name = element.children[0];
-      const score = element.children[1];
-      name.innerHTML = players[i].user;
-      score.innerHTML = players[i].highscore;
-      element.id = players[i].user + "-score";
-      i++;
-    }
+      playerInput.parentNode.insertBefore(loggedLabel, playerInput);
 
-    //score.innerHTML = player.highscore;
+      playerInput.style.display = "none";
+      playerSubmit.style.display = "none";
+
+      Leaderboard.highscore = highscore;
+
+      game.load();
+    });
+  }
+  async getHighscore(username, callback) {
+    Socket.get().emit("user:get", username, function (response) {
+      callback(response.highscore);
+    });
+  }
+
+  static update() {
+    Socket.get().emit("leaderboard:get", function (players) {
+      const playerListElement = document.createElement("div");
+      playerListElement.classList.add("leaderboard-playerlist");
+
+      for (const player of players) {
+        const element = Leaderboard.getPlayerElement(player);
+        playerListElement.appendChild(element);
+      }
+      Leaderboard.playersListElem.innerHTML = "";
+
+      Leaderboard.playersListElem = playerListElement;
+      Leaderboard.leaderboard.appendChild(playerListElement);
+    });
   }
   show() {
-    this.#leaderboard.style.display = "block";
+    Leaderboard.leaderboard.style.display = "block";
+
+    Socket.get().on("leaderboard:update", function () {
+      console.log("updated");
+      Leaderboard.update();
+    });
   }
   hide() {
-    this.#leaderboard.style.display = "none";
+    Leaderboard.leaderboard.style.display = "none";
   }
 }
