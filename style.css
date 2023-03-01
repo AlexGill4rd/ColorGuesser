@@ -6,6 +6,8 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  overflow: hidden;
 }
 .score {
   font-size: 1.5em;
@@ -127,15 +129,13 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
   left: 30px;
   top: 30px;
-  width: 220px;
+  min-width: 220px;
   height: auto;
   padding: 10px;
 }
 .leaderboard-player {
-  display: flex;
-  justify-content: space-between;
-  align-items: left;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto 100px 35px;
 
   background-color: rgba(0, 0, 0, 0.05);
   padding: 7px;
@@ -143,10 +143,18 @@ body {
 .leaderboard-player + div {
   margin-top: 10px;
 }
+.leaderboard-player h2:nth-child(2),
+p {
+  justify-self: flex-end;
+  text-align: right;
+}
 .leaderboard-player-name {
   font-weight: bold;
 
-  border-bottom: 1px solid black;
+  text-decoration: underline;
+}
+.leaderboard-player-score {
+  font-weight: bold;
 }
 .leaderboard-login {
   width: 100%;

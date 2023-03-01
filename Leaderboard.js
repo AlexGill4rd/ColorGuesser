@@ -69,6 +69,15 @@ class Leaderboard {
     return playerDiv;
   }
   onUsernameSet(playerInput, playerSubmit, game) {
+    if (playerInput.value.length > 15) {
+      const popup = new Popup(
+        "error",
+        "Long name",
+        "Doe ni raar en pak een kortere naam"
+      );
+      popup.show();
+      return;
+    }
     Leaderboard.username = playerInput.value;
     this.getHighscore(Leaderboard.username, function (highscore) {
       const loggedLabel = document.createElement("p");

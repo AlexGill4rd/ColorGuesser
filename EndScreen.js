@@ -1,6 +1,8 @@
 class EndScreen {
   #screen = document.createElement("div");
   #description = document.createElement("p");
+  shown = false;
+
   constructor(spelBord) {
     this.spelBord = spelBord;
     this.#initialise();
