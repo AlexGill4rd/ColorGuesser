@@ -171,6 +171,7 @@ class Spelbord {
   }
   #restart() {
     Leaderboard.endTime = new Date();
+    Leaderboard.startTime = new Date();
     this.stopClock();
 
     this.remove();
