@@ -176,3 +176,8 @@ body {
 .leaderboard-label {
   margin-bottom: 10px;
 }
+.clock {
+  font-size: 3em;
+  position: absolute;
+  top: 30px;
+}

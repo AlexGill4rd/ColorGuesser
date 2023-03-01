@@ -15,6 +15,13 @@ class Spelbord {
     return this.#round;
   }
   draw() {
+    this.#bord.classList.add("spelbord");
+
+    const clock = document.createElement("div");
+    clock.classList.add("clock");
+    this.startClock(clock);
+    this.#bord.appendChild(clock);
+
     const blocks = document.createElement("div");
     blocks.classList.add("spelbord-blocks");
 
@@ -40,7 +47,6 @@ class Spelbord {
     header.appendChild(tip);
     this.#bord.appendChild(header);
 
-    this.#bord.classList.add("spelbord");
     const blockAmount = this.width * this.height;
     let incorrectBlock = Math.floor(Math.random() * blockAmount);
 
@@ -92,10 +98,12 @@ class Spelbord {
   #onBlockClick(incorrect, correctIndex) {
     if (!incorrect) {
       if (parseInt(this.#round) > Leaderboard.highscore) {
-        const inputNameElement = document.getElementById("playername");
-        if (inputNameElement.value !== "")
-          this.#updateHighscore(Leaderboard.username, this.#round);
+        Leaderboard.endTime = new Date();
+        this.stopClock();
+
+        this.#updateHighscore(Leaderboard.username);
       }
+      this.spel.stop(this);
 
       let correctElement = document.getElementById(correctIndex);
       const previousColor = correctElement.style.backgroundColor;
@@ -115,7 +123,6 @@ class Spelbord {
         }
         counter++;
       }, 200);
-      this.spel.stop(this);
     } else {
       this.#round++;
 
@@ -128,7 +135,30 @@ class Spelbord {
       this.#nextRound();
     }
   }
-  async #updateHighscore(username, score) {
-    Socket.get().emit("highscore:update", { username: username, score: score });
+  #updateHighscore(username) {
+    const begin = Leaderboard.startTime;
+    const now = Leaderboard.endTime;
+    const duration = now.getTime() - begin.getTime();
+
+    Socket.get().emit("highscore:update", {
+      username: username,
+      score: this.#round,
+      duration: duration,
+    });
+  }
+  #clockId;
+  startClock(clock) {
+    this.#updateClock(clock);
+    this.#clockId = setInterval(() => this.#updateClock(clock), 1000);
+  }
+  #updateClock(clock) {
+    const begin = Leaderboard.startTime;
+    const now = new Date();
+    const durarion = new Date(now.getTime() - begin.getTime());
+    durarion.setHours(durarion.getHours() - 1);
+    clock.innerHTML = durarion.toLocaleTimeString();
+  }
+  stopClock() {
+    clearInterval(this.#clockId);
   }
 }

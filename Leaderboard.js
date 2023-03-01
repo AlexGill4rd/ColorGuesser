@@ -5,6 +5,9 @@ class Leaderboard {
   static highscore = 0;
   static username = "";
 
+  static startTime;
+  static endTime;
+
   constructor(game) {
     this.game = game;
     this.#init();
@@ -27,12 +30,17 @@ class Leaderboard {
     playerName.innerHTML = player.username;
     playerName.id = player.username;
 
+    const duration = document.createElement("h2");
+    duration.classList.add("leaderboard-player-duration");
+    duration.innerHTML = Leaderboard.msToTime(player.duration);
+
     const playerScore = document.createElement("p");
     playerScore.classList.add("leaderboard-player-score");
     playerScore.innerHTML = player.highscore;
     playerScore.id = player.username + "-score";
 
     playerDiv.appendChild(playerName);
+    playerDiv.appendChild(duration);
     playerDiv.appendChild(playerScore);
 
     return playerDiv;
@@ -108,5 +116,15 @@ class Leaderboard {
   }
   hide() {
     Leaderboard.leaderboard.style.display = "none";
+  }
+  static msToTime(s) {
+    let date = new Date(s);
+    date.setHours(date.getHours() - 1);
+    return (
+      date.toLocaleTimeString() +
+      ":" +
+      Math.round(date.getMilliseconds() / 10) +
+      "0"
+    );
   }
 }
