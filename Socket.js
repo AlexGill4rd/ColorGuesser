@@ -1,5 +1,5 @@
 class Socket {
-  static socket = io("localhost:3030");
+  static socket = io("https://colourfinder.onrender.com:10000");
   static get() {
     return Socket.socket;
   }
