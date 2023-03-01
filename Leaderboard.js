@@ -127,8 +127,13 @@ class Leaderboard {
     Leaderboard.leaderboard.style.display = "none";
   }
   static msToTime(s) {
-    let date = new Date(s);
-    date.setHours(date.getHours() - 1);
+    let dateDuration = new Date(s);
+    dateDuration.setHours(dateDuration.getHours() - 1);
+    let date = moment(dateDuration);
+    return date.format("HH:mm:ss");
+  }
+  static dateFormat(dateDuration) {
+    let date = moment(dateDuration);
     return date.format("HH:mm:ss");
   }
 }
