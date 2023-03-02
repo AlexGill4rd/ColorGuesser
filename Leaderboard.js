@@ -54,12 +54,10 @@ class Leaderboard {
     playerInput.type = "text";
     playerInput.id = "playername";
 
-    const playerSubmit = document.createElement("input");
-    playerSubmit.type = "button";
-    playerSubmit.value = "Set";
+    const playerSubmit = document.createElement("button");
+    playerSubmit.innerHTML = '<i class="fa-solid fa-gear"></i> Set';
     playerSubmit.addEventListener("click", () => {
       if (!this.hasSet) {
-        this.hasSet = true;
         this.onUsernameSet(playerInput, playerSubmit, this.game);
       }
     });
@@ -69,6 +67,11 @@ class Leaderboard {
     return playerDiv;
   }
   onUsernameSet(playerInput, playerSubmit, game) {
+    if (playerInput.value === "") {
+      const popup = new Popup("error", "Bad Name", "Geef is een goeie naam...");
+      popup.show();
+      return;
+    }
     if (playerInput.value.length > 15) {
       const popup = new Popup(
         "error",
@@ -78,6 +81,7 @@ class Leaderboard {
       popup.show();
       return;
     }
+    this.hasSet = true;
     Leaderboard.username = playerInput.value;
     this.getHighscore(Leaderboard.username, function (highscore) {
       const loggedLabel = document.createElement("p");
@@ -87,6 +91,7 @@ class Leaderboard {
       playerInput.parentNode.insertBefore(loggedLabel, playerInput);
 
       playerInput.style.display = "none";
+      playerInput.value = "";
       playerSubmit.style.display = "none";
 
       Leaderboard.highscore = highscore;

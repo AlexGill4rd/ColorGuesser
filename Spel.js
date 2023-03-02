@@ -4,6 +4,9 @@ class Spel {
   constructor(game) {
     this.game = game;
   }
+  get Spelboard() {
+    return this.#spelbord;
+  }
   start() {
     Leaderboard.startTime = new Date();
     this.#spelbord = new Spelbord(this, this.game, 5, 5);

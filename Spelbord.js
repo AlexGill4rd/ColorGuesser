@@ -34,25 +34,6 @@ class Spelbord {
 
     header.appendChild(score);
 
-    const tip = document.createElement("button");
-    tip.classList.add("tip-button");
-    tip.innerHTML = `Verander Kleur`;
-    tip.addEventListener("click", () => {
-      if (!this.#changedColor) {
-        this.#changedColor = true;
-        this.#nextRound();
-      }
-    });
-    const restart = document.createElement("div");
-    restart.classList.add("restart-button");
-    restart.addEventListener("click", () => this.#restart());
-
-    const restartIMG = document.createElement("img");
-    restartIMG.src = "http://cdn.onlinewebfonts.com/svg/img_149822.png";
-
-    header.appendChild(tip);
-    restart.appendChild(restartIMG);
-    header.appendChild(restart);
     this.#bord.appendChild(header);
 
     const blockAmount = this.width * this.height;
@@ -93,6 +74,12 @@ class Spelbord {
 
     document.body.appendChild(this.#bord);
   }
+  changeColor() {
+    if (!this.#changedColor) {
+      this.#changedColor = true;
+      this.#nextRound();
+    }
+  }
   #nextRound() {
     document.querySelector(".spelbord").innerHTML = "";
     this.draw();
@@ -102,6 +89,9 @@ class Spelbord {
     this.#bord.remove();
     clearInterval(this.flikkingID);
     this.spel.start();
+
+    Leaderboard.endTime = new Date();
+    Leaderboard.startTime = new Date();
   }
   #onBlockClick(incorrect, correctIndex) {
     if (!incorrect) {
@@ -164,14 +154,14 @@ class Spelbord {
     const now = new Date();
     const durarion = new Date(now.getTime() - begin.getTime());
     durarion.setHours(durarion.getHours() - 1);
-    clock.innerHTML = Leaderboard.dateFormat(durarion);
+    clock.innerHTML = `<i class="fa-regular fa-timer"></i>${Leaderboard.dateFormat(
+      durarion
+    )}`;
   }
   stopClock() {
     clearInterval(this.clockId);
   }
-  #restart() {
-    Leaderboard.endTime = new Date();
-    Leaderboard.startTime = new Date();
+  restart() {
     this.stopClock();
 
     this.remove();
