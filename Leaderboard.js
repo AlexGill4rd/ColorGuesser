@@ -46,7 +46,12 @@ class Leaderboard {
     return playerDiv;
   }
   #getLoginForm() {
-    const playerDiv = document.createElement("div");
+    const playerDiv = document.createElement("form");
+    playerDiv.onsubmit = function (e) {
+      if (!this.hasSet) {
+        this.onUsernameSet(playerInput, playerSubmit, this.game);
+      }
+    };
     playerDiv.classList.add("leaderboard-login");
 
     let playerInput = document.createElement("input");
