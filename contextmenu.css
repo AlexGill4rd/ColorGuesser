@@ -1,0 +1,19 @@
+.context-menu {
+  width: auto;
+  height: auto;
+
+  background-color: #2f2f5e;
+  padding: 10px 0;
+  position: absolute;
+}
+.context-menu button {
+  background-color: #3c3c79;
+  padding: 5px 20px;
+  border: none;
+  color: white;
+  transition: background-color 100ms ease-in-out;
+}
+.context-menu button:hover {
+  cursor: pointer;
+  background-color: #4d4d9c;
+}

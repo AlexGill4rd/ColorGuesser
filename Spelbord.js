@@ -56,7 +56,7 @@ class Spelbord {
     this.#bord.appendChild(header);
 
     const blockAmount = this.width * this.height;
-    let incorrectBlock = Math.floor(Math.random() * blockAmount);
+    const incorrectBlock = Math.floor(Math.random() * blockAmount);
 
     let randomR = Math.floor(Math.random() * 255);
     let randomG = Math.floor(Math.random() * 255);

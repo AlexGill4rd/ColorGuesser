@@ -92,6 +92,12 @@ class Leaderboard {
       Leaderboard.highscore = highscore;
 
       game.load();
+      const popup = new Popup(
+        "success",
+        "Success Login",
+        "Je bent nu ingelogd! Klaar om te spelen."
+      );
+      popup.show();
     });
   }
   async getHighscore(username, callback) {
