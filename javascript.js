@@ -50,7 +50,7 @@ document.body.addEventListener("contextmenu", (e) => {
       contextMenuOpen = true;
     } else closeContectMenu();
   }
-  e.preventDefault();
+  // e.preventDefault();
 });
 document.addEventListener("click", (e) => {
   if (contextMenuOpen) closeContectMenu();
